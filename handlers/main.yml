@@ -1,0 +1,5 @@
+---
+
+- name: reload database
+  service: name=postgresql state=reloaded
+  sudo: true

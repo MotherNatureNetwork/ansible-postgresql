@@ -1,0 +1,22 @@
+---
+
+- name: Install database.
+  apt: pkg={{ item }} state=installed update-cache=yes
+  with_items:
+    - postgresql
+    - python-psycopg2
+  sudo: true
+
+- name: Configure database.
+  copy: src=pg_hba.conf dest=/etc/postgresql/9.3/main/pg_hba.conf
+  sudo: true
+  register: db_conf
+
+- name: Restart db immediately if conf changed
+  service: name=postgresql state=restarted
+  sudo: yes
+  when: db_conf.changed == true
+
+- name: Make sure db is running.
+  service: name=postgresql state=started
+  sudo: true
