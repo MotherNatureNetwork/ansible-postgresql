@@ -1,0 +1,4 @@
+---
+
+postgresql_version: 9.4
+postgresql_distro_version: wheezy

@@ -1,22 +1,19 @@
 ---
 
-- name: Install database.
-  apt: pkg={{ item }} state=installed update-cache=yes
-  with_items:
-    - postgresql
-    - python-psycopg2
-  sudo: true
+- name: Get PostgreSQL apt repo key.
+  apt_key: url=https://www.postgresql.org/media/keys/ACCC4CF8.asc
+           id=ACCC4CF8
+           state=present
 
-- name: Configure database.
-  copy: src=pg_hba.conf dest=/etc/postgresql/9.3/main/pg_hba.conf
-  sudo: true
-  register: db_conf
+- name: Add PostgreSQL apt repo.
+  apt_repository: repo='deb http://apt.postgresql.org/pub/repos/apt/ {{ postgresql_distro_version }}-pgdg main'
+                  state=present
 
-- name: Restart db immediately if conf changed
-  service: name=postgresql state=restarted
-  sudo: yes
-  when: db_conf.changed == true
+- name: Install PostgreSQL.
+  apt: name=postgresql-{{ postgresql_version }}
+
+- name: Install PostgreSQL python module.
+  apt: name=python-pyscopg2
 
 - name: Make sure db is running.
   service: name=postgresql state=started
-  sudo: true
