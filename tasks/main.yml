@@ -10,10 +10,30 @@
                   state=present
 
 - name: Install PostgreSQL.
-  apt: name=postgresql-{{ postgresql_version }}
+  apt: name={{ item }}
+  with_items:
+    - postgresql-{{ postgresql_version }}
+    - postgresql-server-dev-{{ postgresql_version }}
+    - python-dev
 
 - name: Install PostgreSQL python module.
-  apt: name=python-pyscopg2
+  pip: name=psycopg2
 
 - name: Make sure db is running.
   service: name=postgresql state=started
+
+- name: Create database
+  sudo: yes
+  sudo_user: postgres
+  postgresql_db: name={{ postgresql_database }}
+                 state=present
+                 login_unix_socket='/var/run/postgresql'
+  when: postgresql_database is defined
+
+- name: Create db user
+  sudo: yes
+  sudo_user: postgres
+  postgresql_user: name={{ postgresql_user }}
+                   password={{ postgresql_password }}
+                   login_unix_socket='/var/run/postgresql'
+  when: postgresql_user is defined
