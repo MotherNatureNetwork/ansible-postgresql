@@ -3,4 +3,5 @@
 postgresql_version: 9.4
 postgresql_distro_version: wheezy
 postgresql_user: null
+postgresql_password: null
 postgresql_database: null

@@ -15,6 +15,12 @@ See defaults/main.yml
 
     postgresql_version: 9.4
     postgresql_distro_version: trusty
+    postgresql_user: db_user (optional)
+    postgresql_password: 123456
+    postgresql_database: main_db (optional)
+
+when `postgresql_user`, `postgresql_password`, or `postgresql_database` are not
+specified, their respective tasks will be skipped.
 
 Dependencies
 ------------
