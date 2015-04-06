@@ -23,7 +23,6 @@
   service: name=postgresql state=started
 
 - name: Create database
-  sudo: yes
   sudo_user: postgres
   postgresql_db: name={{ postgresql_database }}
                  state=present
@@ -31,7 +30,6 @@
   when: postgresql_database is defined
 
 - name: Create db user
-  sudo: yes
   sudo_user: postgres
   postgresql_user: name={{ postgresql_user }}
                    password={{ postgresql_password }}
