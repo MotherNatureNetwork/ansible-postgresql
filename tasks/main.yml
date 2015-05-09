@@ -33,5 +33,6 @@
   sudo_user: postgres
   postgresql_user: name={{ postgresql_user }}
                    password={{ postgresql_password }}
+                   role_attr_flags={{ postgresql_user_attrs | join(",") }}
                    login_unix_socket='/var/run/postgresql'
   when: postgresql_user is defined

@@ -5,3 +5,5 @@ postgresql_distro_version: wheezy
 postgresql_user: null
 postgresql_password: null
 postgresql_database: null
+postgresql_user_attrs:
+  - NOSUPERUSER
