@@ -27,7 +27,7 @@
   postgresql_db: name={{ postgresql_database }}
                  state=present
                  login_unix_socket='/var/run/postgresql'
-  when: postgresql_database
+  when: postgresql_database is defined
 
 - name: Create db user
   sudo_user: postgres
@@ -35,4 +35,4 @@
                    password={{ postgresql_password }}
                    role_attr_flags={{ postgresql_user_attrs | join(",") }}
                    login_unix_socket='/var/run/postgresql'
-  when: postgresql_user
+  when: postgresql_user is defined
