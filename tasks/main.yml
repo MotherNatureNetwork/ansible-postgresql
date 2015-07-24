@@ -28,6 +28,7 @@
                  state=present
                  login_unix_socket='/var/run/postgresql'
   when: postgresql_database is defined
+  register: postgres_db
 
 - name: Create db user
   sudo_user: postgres
@@ -36,3 +37,8 @@
                    role_attr_flags={{ postgresql_user_attrs | join(",") }}
                    login_unix_socket='/var/run/postgresql'
   when: postgresql_user is defined
+
+- name: Restore DB
+  sudo_user: postgres
+  command: pg_restore -d {{ postgresql_database }} {{ postgresql_dump }}
+  when: postgres_db.changed == true and postgresql_dump is defined
