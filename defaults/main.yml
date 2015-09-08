@@ -2,9 +2,5 @@
 
 postgresql_version: 9.4
 postgresql_distro_version: wheezy
-postgresql_user:
-postgresql_password:
-postgresql_database:
-postgresql_dump:
 postgresql_user_attrs:
   - NOSUPERUSER
