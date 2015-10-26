@@ -18,10 +18,7 @@
     - postgresql-{{ postgresql_version }}
     - postgresql-server-dev-{{ postgresql_version }}
     - python-dev
-    - python-pip
-
-- name: Install PostgreSQL python module.
-  pip: name=psycopg2
+    - python-psycopg2
 
 - name: Make sure db is running.
   service: name=postgresql state=started
