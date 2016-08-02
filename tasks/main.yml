@@ -24,15 +24,15 @@
   service: name=postgresql state=started
 
 - name: Create database
-  sudo_user: postgres
+  become_user: postgres
   postgresql_db: name={{ postgresql_database }}
                  state=present
                  login_unix_socket='/var/run/postgresql'
-  when: postgresql_database is defined
   register: postgres_db
+  when: postgresql_database is defined
 
 - name: Create db user
-  sudo_user: postgres
+  become_user: postgres
   postgresql_user: name={{ postgresql_user }}
                    password={{ postgresql_password }}
                    role_attr_flags={{ postgresql_user_attrs | join(",") }}
@@ -40,6 +40,6 @@
   when: postgresql_user is defined
 
 - name: Restore DB
-  sudo_user: postgres
+  become_user: postgres
   command: pg_restore -d {{ postgresql_database }} {{ postgresql_dump }}
   when: postgres_db.changed == true and postgresql_dump is defined
