@@ -21,5 +21,8 @@ vagrant:
         ansible_groups:
           - group1
 
+ansible:
+  playbook: tests/playbook.yml
+
 verifier:
   name: testinfra
