@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/MotherNatureNetwork/ansible-postgresql.svg?branch=master)](https://travis-ci.org/MotherNatureNetwork/ansible-postgresql)
+
 PostgreSQL
 =========
 
