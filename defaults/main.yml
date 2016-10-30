@@ -4,3 +4,7 @@ postgresql_version: 9.4
 postgresql_distro_version: wheezy
 postgresql_user_attrs:
   - NOSUPERUSER
+
+postgresql_user: '{{ ansible_ssh_user }}'
+postgresql_password: '{{ ansible_ssh_user }}'
+postgresql_database: '{{ ansible_ssh_user }}'
