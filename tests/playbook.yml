@@ -32,4 +32,4 @@
         - python2.7
 
   roles:
-    - role: mnn.postgresql
+    - role: ansible-postgresql
