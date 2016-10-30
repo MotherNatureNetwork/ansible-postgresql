@@ -5,11 +5,11 @@ driver:
 docker:
   containers:
 
-      - name: mnn.postgresql-01
-        image: ubuntu
-        image_version: trusty
-        ansible_groups:
-          - group1
+    - name: mnn.postgresql-01
+      image: ubuntu
+      image_version: trusty
+      ansible_groups:
+        - group1
 
 ansible:
   playbook: tests/playbook.yml
