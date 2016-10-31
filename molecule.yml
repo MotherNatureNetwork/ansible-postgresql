@@ -13,6 +13,7 @@ docker:
 
 ansible:
   playbook: tests/playbook.yml
+  requirements_file: tests/requirements.yml
 
 verifier:
   name: testinfra

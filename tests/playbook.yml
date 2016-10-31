@@ -1,35 +1,6 @@
 ---
 - hosts: all
 
-  pre_tasks:
-    - name: install pip
-      apt: name={{ item }}
-      with_items:
-        - libffi-dev
-        - libssl-dev
-        - python-dev
-        - python-pip
-
-    - name: install ssl deps
-      pip: name={{ item }}
-      with_items:
-        - cffi
-        - urllib3
-        - pyopenssl
-        - ndg-httpsclient
-        - pyasn1
-
-    - name: Add Dead Snake 2.7 Repo Key
-      apt_key: keyserver=keyserver.ubuntu.com id=FF3997E83CD969B409FB24BC5BB92C09DB82666C
-
-    - name: Add Dead Snakes APT Repo
-      apt_repository: repo='ppa:fkrull/deadsnakes-python2.7'
-      register: apt_repo
-
-    - name: Install Python
-      apt: name={{ item }} update_cache=yes
-      with_items:
-        - python2.7
-
   roles:
+    - role: mnn.python
     - role: ansible-postgresql
