@@ -2,5 +2,4 @@
 - hosts: all
 
   roles:
-    - role: mnn.python
     - role: ansible-postgresql
