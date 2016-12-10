@@ -1,5 +1,11 @@
 ---
 
+- name: install required SSL certs
+  apt: name={{ item }}
+  with_items:
+    - apt-transport-https
+    - ca-certificates
+
 - name: Get PostgreSQL apt repo key.
   apt_key: url=https://www.postgresql.org/media/keys/ACCC4CF8.asc
            id=ACCC4CF8
@@ -21,7 +27,12 @@
     - python-psycopg2
 
 - name: Make sure db is running.
-  service: name=postgresql state=started
+  service: name=postgresql state=started enabled=yes
+  when: ansible_distribution_release == 'trusty'
+
+- name: Start and Enable Postgresql service
+  systemd: name=postgresql state=started enabled=yes
+  when: ansible_distribution_release == 'xenial'
 
 - name: Create database
   become_user: postgres

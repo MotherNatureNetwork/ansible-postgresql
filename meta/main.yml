@@ -6,23 +6,11 @@ galaxy_info:
   license: GPLv3
   min_ansible_version: 1.5
   platforms:
-    - name: Debian
-      versions:
-        - etch
-        - jessie
-        - lenny
-        - sid
-        - squeeze
-        - wheezy
     - name: Ubuntu
       versions:
-        - lucid
-        - precise
-        - saucy
         - trusty
-        - utopic
+        - xenial
   categories:
     - system
 
-dependencies:
-  - role: mnn.python
+dependencies: []
