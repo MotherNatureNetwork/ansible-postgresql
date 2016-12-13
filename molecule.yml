@@ -12,13 +12,17 @@ driver:
   name: vagrant
 
 vagrant:
+  # Comment raw_config_args if testing against trusty
+  raw_config_args:
+    - "ssh.username = 'ubuntu'"
 
   platforms:
+    - name: xenial64
+      box: xenial64
+      box_url: https://s3.amazonaws.com/tech-only.dev.mnn.com/Vagrant/ncg-xenial.box
+
     - name: trusty64
       box: ncg/trusty64
-
-    - name: xenial64
-      box: ncg/xenial64
 
   providers:
     - name: virtualbox
@@ -32,6 +36,7 @@ vagrant:
 
 ansible:
   playbook: tests/playbook.yml
+  sudo: False
 
 verifier:
   name: testinfra
