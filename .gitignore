@@ -2,3 +2,4 @@
 .vagrant
 tests/__pycache__
 .cache
+playbook.retry
