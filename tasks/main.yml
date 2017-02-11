@@ -26,16 +26,22 @@
     - python-dev
     - python-psycopg2
 
+- name: Configure Postgres
+  copy: src={{ item }}
+        dest=/etc/postgresql/{{ postgresql_version }}/main/
+        mode=0644
+  with_items:
+    - pg_hba.conf
+
 - name: Make sure db is running.
-  service: name=postgresql state=started enabled=yes
+  service: name=postgresql state=restarted enabled=yes
   when: ansible_distribution_release == 'trusty'
 
 - name: Start and Enable Postgresql service
-  systemd: name=postgresql state=started enabled=yes
+  systemd: name=postgresql state=restarted enabled=yes
   when: ansible_distribution_release == 'xenial'
 
 - name: Create database
-  become_user: postgres
   postgresql_db: name={{ postgresql_database }}
                  state=present
                  login_unix_socket='/var/run/postgresql'
@@ -43,14 +49,11 @@
   when: postgresql_database is defined
 
 - name: Create db user
-  become_user: postgres
   postgresql_user: name={{ postgresql_user }}
-                   password={{ postgresql_password }}
                    role_attr_flags={{ postgresql_user_attrs | join(",") }}
                    login_unix_socket='/var/run/postgresql'
   when: postgresql_user is defined
 
 - name: Restore DB
-  become_user: postgres
   command: pg_restore -d {{ postgresql_database }} {{ postgresql_dump }}
   when: postgres_db.changed == true and postgresql_dump is defined
