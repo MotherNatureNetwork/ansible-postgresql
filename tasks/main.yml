@@ -57,3 +57,5 @@
 - name: Restore DB
   command: pg_restore -d {{ postgresql_database }} {{ postgresql_dump }}
   when: postgres_db.changed == true and postgresql_dump is defined
+  tags:
+    - skip_ansible_lint
