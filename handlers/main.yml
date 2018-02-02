@@ -2,4 +2,4 @@
 
 - name: reload database
   service: name=postgresql state=reloaded
-  become: yes
+  become: true
