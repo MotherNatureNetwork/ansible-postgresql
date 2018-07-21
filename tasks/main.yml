@@ -53,7 +53,7 @@
   when: postgresql_user is defined
 
 - name: Restore DB
-  become: no
+  become: false
   command: pg_restore -d {{ postgresql_database }} -U {{ postgresql_user }} -n public {{ postgresql_dump }}
   when: postgres_db.changed == true and postgresql_dump is defined
   tags:
