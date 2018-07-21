@@ -1,5 +1,5 @@
 ---
 
-- name: reload database
-  service: name=postgresql state=reloaded
+- name: reload postgresql
+  service: name=postgresql state=reloaded enabled=yes
   become: true
