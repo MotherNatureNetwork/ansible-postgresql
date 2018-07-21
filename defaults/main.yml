@@ -5,5 +5,5 @@ postgresql_distro_version: wheezy
 postgresql_user_attrs:
   - NOSUPERUSER
 
-postgresql_user: no
-postgresql_database: no
+postgresql_user: false
+postgresql_database: false
