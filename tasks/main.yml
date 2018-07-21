@@ -15,11 +15,8 @@
   apt_repository: repo='deb http://apt.postgresql.org/pub/repos/apt/ {{ postgresql_distro_version }}-pgdg main'
                   state=present
 
-- name: Update Apt
-  apt: update_cache=yes
-
 - name: Install PostgreSQL.
-  apt: name={{ item }}
+  apt: name={{ item }} update_cache=yes
   with_items:
     - postgresql-{{ postgresql_version }}
     - postgresql-server-dev-{{ postgresql_version }}
