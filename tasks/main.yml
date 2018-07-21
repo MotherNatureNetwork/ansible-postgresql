@@ -22,6 +22,7 @@
     - postgresql-server-dev-{{ postgresql_version }}
     - python-dev
     - python-psycopg2
+  notify: reload postgresql
 
 - name: Configure Postgres
   copy: src={{ item }}
@@ -29,13 +30,13 @@
         mode=0644
   with_items:
     - pg_hba.conf
+  notify: reload postgresql
 
-- name: Make sure db is running.
-  service: name=postgresql state=restarted enabled=yes
-  when: ansible_distribution_release == 'trusty'
+- name: force all notified handlers
+  meta: flush_handlers
 
 - name: Start and Enable Postgresql service
-  systemd: name=postgresql state=restarted enabled=yes
+  systemd: name=postgresql state=started enabled=yes
   when: ansible_distribution_release == 'xenial'
 
 - name: Create database
