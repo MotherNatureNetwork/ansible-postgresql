@@ -1,10 +1,10 @@
 ---
 
 - name: install required SSL certs
-  apt: name={{ item }}
-  with_items:
-    - apt-transport-https
-    - ca-certificates
+  apt:
+    pkg:
+      - apt-transport-https
+      - ca-certificates
 
 - name: Get PostgreSQL apt repo key.
   apt_key: url=https://www.postgresql.org/media/keys/ACCC4CF8.asc
@@ -12,16 +12,18 @@
            state=present
 
 - name: Add PostgreSQL apt repo.
-  apt_repository: repo='deb http://apt.postgresql.org/pub/repos/apt/ {{ postgresql_distro_version }}-pgdg main'
+  apt_repository: repo='deb http://apt.postgresql.org/pub/repos/apt/
+                  {{ postgresql_distro_version }}-pgdg main'
                   state=present
 
 - name: Install PostgreSQL.
-  apt: name={{ item }} update_cache=yes
-  with_items:
-    - postgresql-{{ postgresql_version }}
-    - postgresql-server-dev-{{ postgresql_version }}
-    - python-dev
-    - python-psycopg2
+  apt:
+    pkg:
+      - postgresql-{{ postgresql_version }}
+      - postgresql-server-dev-{{ postgresql_version }}
+      - python-dev
+      - python-psycopg2
+    update_cache: true
   notify: reload postgresql
 
 - name: Configure Postgres
@@ -54,7 +56,8 @@
 
 - name: Restore DB
   become: false
-  command: pg_restore -d {{ postgresql_database }} -U {{ postgresql_user }} -n public {{ postgresql_dump }}
+  command: pg_restore -d {{ postgresql_database }} -U {{ postgresql_user }}
+           -n public {{ postgresql_dump }}
   when: postgres_db.changed == true and postgresql_dump is defined
   tags:
     - skip_ansible_lint
