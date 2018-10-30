@@ -1,5 +1,5 @@
 .molecule
 .vagrant
-tests/__pycache__
+__pycache__
 .cache
 playbook.retry
