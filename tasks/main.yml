@@ -34,6 +34,14 @@
     - pg_hba.conf
   notify: reload postgresql
 
+- name: Listen as any address
+  lineinfile: 
+    path: /etc/postgresql/{{ postgresql_version }}/main/postgresql.conf
+    regexp: '^#?listen_addresses\s*='
+    line: "listen_addresses = '*'"
+    state: present
+  notify: restart postgresql
+
 - name: force all notified handlers
   meta: flush_handlers
 
